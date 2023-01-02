@@ -26,11 +26,14 @@ async function accessDb(operation, arguments){
 
 function main(){
 
-    
     const PORT = 8000;
     
     const app = express();
     
+    app.get('/', (req, res) => {
+        res.json("olaaaaaaaaaaaaaaaa")
+    })
+
     accessDb("", "")
     app.listen(PORT, function (){
         console.log(`Server started running on http://localhost:${PORT}`);
