@@ -1,0 +1,10 @@
+.catsDisplay{
+    justify-content: center;
+}
+
+.catFrame{
+    border: 2px;
+    border-color: rgb(161, 161, 161);
+    border-style: solid;
+    border-radius: 10px;
+}
