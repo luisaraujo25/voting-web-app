@@ -1,0 +1,14 @@
+.navbar{
+    background-color: rgb(127, 127, 127);
+    color: white;
+    font-size: larger;
+    justify-content: start; 
+}
+
+.navbar, a:link, a:visited{
+    color:white;
+}
+.navbar, a:hover, a:active{
+   color: rgb(178, 178, 178);
+   text-decoration: none;
+}
