@@ -13,7 +13,7 @@ export default function Intro() {
             const cats = await (await fetch(URL)).json();
             setLoading(false);
             setCats(cats);
-            console.log(JSON.parse(cats));
+            console.log(cats);
         } catch(error){
             setLoading(false);
             console.log(error);

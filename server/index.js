@@ -1,35 +1,15 @@
-const express = require('express');
-const fs = require('fs');
-const cors = require("cors");
-const mongo = require('mongodb').MongoClient;
-
-async function accessDb(operation, arguments){
-
-    const URL = "mongodb://localhost:27017/votingdb"
-    
-    try {
-        mongo.connect(URL, function(err, db){
-            const data = db.db("votingdb");
-            console.log(data.collection("cat").find({}).toArray(function(err, res){
-                try{
-                    console.log(res)
-                }
-                catch(err){
-                    throw err;
-                }
-            }))
-        })
-     
-    } catch (e) {
-        console.error(e);
-    }
-}
-
 function main(){
 
+    const express = require('express');
+    const fs = require('fs');
+    const cors = require("cors");
+    const mongo = require('mongodb').MongoClient;
+    
     const PORT = 8000;
+    const mongoURL = "mongodb://localhost:27017/votingdb" 
     
     const app = express();
+    let database;
     
     const corsOptions ={
         origin:'*', 
@@ -38,13 +18,28 @@ function main(){
      } 
     app.use(cors(corsOptions))
 
-    app.get('', (req, res) => {
-        res.json(JSON.stringify("olaaaaaaaaaaaaaaaa"))
+    app.get('/', (req, res) => {
+        let cats;
+        database.collection("cat").find({}).toArray()
+            .then( result => {
+                cats = result;
+                res.json(cats);
+                console.log(cats)
+            })
+            .catch( err => {
+                throw err;
+            })
     })
 
-    //accessDb("", "")
     app.listen(PORT, function (){
         console.log(`Server started running on http://localhost:${PORT}`);
+        mongo.connect(mongoURL)
+        .then( (client) => {
+            database = client.db();
+        })
+        .catch( err => {
+            throw err;
+        })
     });
 }
 
