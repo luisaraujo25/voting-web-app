@@ -5,8 +5,7 @@ export default function Intro() {
     const [loading, setLoading] = useState(true);
     const [cats, setCats] = useState([]);
 
-    //const URL = "http://localhost:8000/" 
-    const URL = "https://course-api.com/react-tours-project";
+    const URL = "http://localhost:8000/" 
 
     const fetchCats = async () => {
         setLoading(true);
@@ -14,14 +13,14 @@ export default function Intro() {
             const cats = await (await fetch(URL)).json();
             setLoading(false);
             setCats(cats);
-            console.log(cats);
+            console.log(JSON.parse(cats));
         } catch(error){
             setLoading(false);
             console.log(error);
         }
     };
 
-    useEffect = (() => {
+    useEffect(() => {
         fetchCats();
     }, [])
 

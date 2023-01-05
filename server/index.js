@@ -39,7 +39,7 @@ function main(){
     app.use(cors(corsOptions))
 
     app.get('', (req, res) => {
-        res.json()
+        res.json(JSON.stringify("olaaaaaaaaaaaaaaaa"))
     })
 
     //accessDb("", "")
