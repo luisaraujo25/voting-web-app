@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import Cat from "./Cat";
+import Vote from "./Vote";
 
 export default function Intro() {
 
@@ -14,7 +15,6 @@ export default function Intro() {
             const cats = await (await fetch(URL)).json();
             setLoading(false);
             setCats(cats);
-            console.log(cats);
         } catch(error){
             setLoading(false);
             console.log(error);
@@ -36,7 +36,12 @@ export default function Intro() {
             <h3>Welcome!</h3>
             <div className="catsDisplay d-flex justify-content-center mt-5">
                 {cats.map( cat => {
-                    return <Cat key={cat._id} {...cat}/>
+                    return (
+                        <div key={cat._id} >
+                            <Cat {...cat}/>
+                            <Vote url = {URL} id = {cat._id}/>
+                        </div>
+                    )
                 })}
             </div>
         </div>

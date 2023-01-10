@@ -15,7 +15,6 @@ export default function Cat({_id, name, age, location, votes, imgName}){
         try{
             const res = await (await fetch(`http://localhost:8000/cat/images`, options)).text()
             setImg(res);
-            console.log(res);
         } catch(error){
             console.log(error);
         }

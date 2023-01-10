@@ -25,20 +25,17 @@ function main(){
     app.use(express.static('public'))
 
     app.get('/', (req, res) => {
-        let cats;
         database.collection("cat").find({}).toArray()
-            .then( result => {
-                cats = result;
+            .then( cats => {
                 res.json(cats);
-                console.log(cats)
             })
             .catch( err => {
                 throw err;
             })
     })
 
+    //request the link where CAT_ID image is stored
     app.post('/cat/images', (req, res) => {
-        //cat/image/:id
         const path = "http://localhost:8000/" + `static/img/cat${req.body.id}.jpg`;
         try{
             //res.set("Content-type", "image/jpg");
@@ -48,6 +45,32 @@ function main(){
         } catch(err){
             res.sendStatus(404);
         }
+    })
+
+    app.get('/updateVotes/:id', async (req, res) => {
+        
+        const id = parseInt(req.params.id);
+        
+        let cat;
+
+        await database.collection("cat").findOne({_id: id})
+            .then(res => {
+                cat = res;
+            })
+            .catch( err => {
+                console.log("Can't find cat");
+                res.sendStatus(404);
+            });
+        
+        const updatedInfo = { $set: {votes: cat.votes + 1}};
+
+        database.collection("cat").updateOne({_id: id}, updatedInfo, (err, res) => {
+            if (err) throw err;
+            console.log(`Cat${id} has now ${cat.votes+1}`)
+        })
+        /*
+        res.end("Updated!");
+        */
     })
 
     app.listen(PORT, function (){
