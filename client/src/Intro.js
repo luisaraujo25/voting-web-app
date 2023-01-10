@@ -39,7 +39,7 @@ export default function Intro() {
                     return (
                         <div key={cat._id} >
                             <Cat {...cat}/>
-                            <Vote url = {URL} id = {cat._id}/>
+                            <Vote votes={cat.votes} url = {URL} id = {cat._id}/>
                         </div>
                     )
                 })}

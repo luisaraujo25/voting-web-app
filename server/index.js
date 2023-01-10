@@ -54,8 +54,8 @@ function main(){
         let cat;
 
         await database.collection("cat").findOne({_id: id})
-            .then(res => {
-                cat = res;
+            .then(response => {
+                cat = response;
             })
             .catch( err => {
                 console.log("Can't find cat");
@@ -68,9 +68,7 @@ function main(){
             if (err) throw err;
             console.log(`Cat${id} has now ${cat.votes+1}`)
         })
-        /*
         res.end("Updated!");
-        */
     })
 
     app.listen(PORT, function (){
