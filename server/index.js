@@ -71,6 +71,8 @@ function main(){
         res.end("Updated!");
     })
 
+    app.get
+
     app.listen(PORT, function (){
         console.log(`Server started running on http://localhost:${PORT}`);
         mongo.connect(mongoURL)
