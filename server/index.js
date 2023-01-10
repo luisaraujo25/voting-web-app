@@ -4,11 +4,14 @@ function main(){
     const fs = require('fs');
     const cors = require("cors");
     const mongo = require('mongodb').MongoClient;
-    
+    const bodyParser = require('body-parser');
+
     const PORT = 8000;
     const mongoURL = "mongodb://localhost:27017/votingdb" 
     
     const app = express();
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
     let database;
     
     const corsOptions ={
@@ -16,7 +19,10 @@ function main(){
         credentials:true,            //access-control-allow-credentials:true
         optionSuccessStatus:200,
      } 
+
     app.use(cors(corsOptions))
+
+    app.use(express.static('public'))
 
     app.get('/', (req, res) => {
         let cats;
@@ -29,6 +35,19 @@ function main(){
             .catch( err => {
                 throw err;
             })
+    })
+
+    app.post('/cat/images', (req, res) => {
+        //cat/image/:id
+        const path = "http://localhost:8000/" + `static/img/cat${req.body.id}.jpg`;
+        try{
+            //res.set("Content-type", "image/jpg");
+            res.set("Content-Type", "text/plain");
+            res.send(path);
+            res.end();
+        } catch(err){
+            res.sendStatus(404);
+        }
     })
 
     app.listen(PORT, function (){
